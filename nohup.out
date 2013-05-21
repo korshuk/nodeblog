@@ -1,0 +1,23 @@
+mongod --help for help and startup options
+Thu May 16 15:28:34 
+Thu May 16 15:28:34 warning: 32-bit servers don't have journaling enabled by default. Please use --journal if you want durability.
+Thu May 16 15:28:34 
+Thu May 16 15:28:34 [initandlisten] MongoDB starting : pid=11022 port=27017 dbpath=/data/db/ 32-bit host=igor-1215P
+Thu May 16 15:28:34 [initandlisten] 
+Thu May 16 15:28:34 [initandlisten] ** NOTE: when using MongoDB 32 bit, you are limited to about 2 gigabytes of data
+Thu May 16 15:28:34 [initandlisten] **       see http://blog.mongodb.org/post/137788967/32-bit-limitations
+Thu May 16 15:28:34 [initandlisten] **       with --journal, the limit is lower
+Thu May 16 15:28:34 [initandlisten] 
+Thu May 16 15:28:34 [initandlisten] db version v2.0.6, pdfile version 4.5
+Thu May 16 15:28:34 [initandlisten] git version: nogitversion
+Thu May 16 15:28:34 [initandlisten] build info: Linux aatxe 3.2.0-23-generic #36-Ubuntu SMP Tue Apr 10 20:39:51 UTC 2012 i686 BOOST_LIB_VERSION=1_49
+Thu May 16 15:28:34 [initandlisten] options: {}
+Thu May 16 15:28:35 [initandlisten] exception in initAndListen: 10296 dbpath (/data/db/) does not exist, terminating
+Thu May 16 15:28:35 dbexit: 
+Thu May 16 15:28:35 [initandlisten] shutdown: going to close listening sockets...
+Thu May 16 15:28:35 [initandlisten] shutdown: going to flush diaglog...
+Thu May 16 15:28:35 [initandlisten] shutdown: going to close sockets...
+Thu May 16 15:28:35 [initandlisten] shutdown: waiting for fs preallocator...
+Thu May 16 15:28:35 [initandlisten] shutdown: closing all files...
+Thu May 16 15:28:35 [initandlisten] closeAllFiles() finished
+Thu May 16 15:28:35 dbexit: really exiting now
