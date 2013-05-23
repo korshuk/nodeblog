@@ -1,0 +1,15 @@
+
+block content
+	.page
+		h2 New User
+		p
+			a.button(href='/admin/users/list') &larr; All Users
+			form(method='post', action='/admin/users')
+				div
+					label Username:
+					input(name='name', value=u.name || '')
+				div
+					label Password:
+					input(name='pass', value='')
+				div
+					input(type='submit', value='Save')

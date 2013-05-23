@@ -6,7 +6,7 @@ function define(mongoose, fn) {
   
   UserSchema = new Schema({
    	'name': {type: String, index: true},
-   	'sult': String,
+   	'salt': String,
     'hash': String,
    	'createdAt': {type: Date, default: Date.now}
   });

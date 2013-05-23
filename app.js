@@ -1,6 +1,6 @@
 var express = require('express'),
     mongoose = require('mongoose'),
-    hash = require('./pass').hash,
+    //hash = require('./pass').hash,
     NewsController = require('./controllers/news').NewsController,
     UserController = require('./controllers/user').UserController,
     db;
@@ -35,9 +35,6 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-
-// Session-persisted message middleware
-
 app.use(function(req, res, next){
   var err = req.session.error,
       msg = req.session.success;
@@ -45,45 +42,11 @@ app.use(function(req, res, next){
   delete req.session.success;
   res.locals.logged = 'not logged';
   res.locals.message = '';
-  if (err) res.locals.message = '<p class="msg error">' + err + '</p>';
-  if (msg) res.locals.message = '<p class="msg success">' + msg + '</p>';
-  if (req.session.user) res.locals.logged = 'logged In';
+  if (err) res.locals.message = '<div class="alert alert-danger">' + err + '</div>';
+  if (msg) res.locals.message = '<div class="alert alert-success">' + msg + '</div>';
+  if (req.session.user) res.locals.logged = 'logged';
   next();
 });
-
-
-var users = {
-  tj: { name: 'tj' }
-};
-
-// when you create a user, generate a salt
-// and hash the password ('foobar' is the pass here)
-
-hash('foobar', function(err, salt, hash){
-  if (err) throw err;
-  // store the salt & hash in the "db"
-  users.tj.salt = salt;
-  users.tj.hash = hash;
-});
-
-
-
-// Authenticate using our plain-object database of doom!
-
-function authenticate(name, pass, fn) {
-  if (!module.parent) console.log('authenticating %s:%s', name, pass);
-  var user = users[name];
-  // query the db for the given username
-  if (!user) return fn(new Error('cannot find user'));
-  // apply the same algorithm to the POSTed password, applying
-  // the hash against the pass / salt, if there is a match we
-  // found the user
-  hash(pass, user.salt, function(err, hash){
-    if (err) return fn(err);
-    if (hash == user.hash) return fn(null, user);
-    fn(new Error('invalid password'));
-  })
-}
 
 function auth(req, res, next) {
   if (req.session.user) {
@@ -113,25 +76,24 @@ app.get('/admin', function(req, res) {
   res.render('admin/login');
 });
 app.post('/admin', function(req, res) {
-  authenticate(req.body.username, req.body.password, function(err, user){
-    if (user) {
-      req.session.regenerate(function(){
-        req.session.user = user;
-        req.session.success = 'Authenticated as ' + user.name + ' click to <a href="/logout">logout</a>. You may now access <a href="/news/create">/news create</a>.';
-        res.redirect('back');
-      });
-    } else {
-      req.session.error = 'Authentication failed, please check your '
-        + ' username and password.'
-        + ' (use "tj" and "foobar")';
-      res.redirect('admin');
-    }
-  });
+  userController.authenticate(req.body.username, req.body.password, req, res);
 });
 app.get('/logout', function(req, res){
-  req.session.destroy(function(){
-    res.redirect('/admin');
-  });
+  userController.logout(req, res);
+});
+
+
+app.get('/admin/users', auth, function(req, res){
+  userController.list(req, res);
+});
+app.get('/admin/users/create', function(req, res){
+  userController.create(req, res);
+});
+app.post('/admin/users', function(req, res){
+  userController.save(req, res);
+});
+app.get('/admin/users/:id.:format?/delete', function(req, res) {
+  userController.remove(req, res);
 });
 /*
 
