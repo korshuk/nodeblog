@@ -1,0 +1,15 @@
+
+block content
+	.page
+		h2 New News
+		p
+			a.button(href='/news') &larr; All News
+			form(method='post', action='/news')
+				div
+					label Title:
+					input(name='title', value=n.title || '')
+				div
+					label Text:
+					textarea(name='body')= n.body
+				div
+					input(type='submit', value='Save')

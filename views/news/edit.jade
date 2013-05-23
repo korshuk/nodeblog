@@ -1,0 +1,17 @@
+
+block content
+	.page
+		h2 Edit News
+		p
+			a.button(href='/news') &larr; All News
+			form(method='post', action='/news/' + locals.n.id)
+				input(name='locals.n[id]', value=locals.n.id, type='hidden')
+				input(name='_method', value='PUT', type='hidden')
+				div
+					label Title:
+					input(name='title', value=locals.n.title || '')
+				div
+					label Text:
+					textarea(name='body')= locals.n.body
+				div
+					input(type='submit', value='Save')

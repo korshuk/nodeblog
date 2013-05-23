@@ -5,8 +5,7 @@ var BSON = require('mongodb').BSON;
 var ObjectID = require('mongodb').ObjectID;
 
 ArticleProvider = function(host, port) {
-if (process.env.MONGOHQ_URL) { // connect to mongoHQ
-console.log('l');
+  if (process.env.MONGOHQ_URL) { // connect to mongoHQ
 		this.db = Db.connect(process.env.MONGOHQ_URL, {db: {auto_reconnect: true}, noOpen: true, uri_decode_auth: true});
 		this.db.open(function(err, db) {
 			if (err == null) {
@@ -28,15 +27,15 @@ console.log('l');
 		});
 	}
 	else {  
-this.db= new Db('node-mongo-blog', new Server(host, port, {auto_reconnect: true}, {safe:false}));
-  this.db.open(function(error, db) {
-if(error) {
-console.log(error);
-} else {
-console.log("connected to mongod with no problems...");
-}
-});
-}
+    this.db= new Db('node-mongo-blog', new Server(host, port, {auto_reconnect: true}, {safe:false}));
+    this.db.open(function(error, db) {
+      if(error) {
+        console.log(error);
+      } else {
+        console.log("connected to mongod with no problems...");
+      }
+    });
+  }
 };
 
 ArticleProvider.prototype.getCollection= function(callback) {

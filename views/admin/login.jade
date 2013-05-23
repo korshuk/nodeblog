@@ -1,0 +1,13 @@
+h1 Please Login
+h2= locals.logged
+p!= locals.message
+p
+	| Try accessing  
+	a(href="/news/create") news/create
+	, then authenticate with "tj" and "foobar".
+form(method='post', action='/admin')
+	label Username:
+	input(name='username')
+	label Password:
+	input(name='password')
+	input(type='submit', value='Login')

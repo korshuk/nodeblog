@@ -1,0 +1,10 @@
+block content
+  h1 List of News
+  ul
+    - each n in locals.news
+      li
+        div.title 
+          a(href="/news/"+n.id.toHexString())= n.title
+        div.id= n.id
+        div.createdAt= n.createdAt
+        div.body!= n.body
