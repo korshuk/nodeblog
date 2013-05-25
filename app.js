@@ -14,14 +14,9 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(require('stylus').middleware({ src: __dirname + '/public' }));
-  
-
-
-  
   app.use(express.static(__dirname + '/public'));
   app.set('db-uri', 'mongodb://localhost/nodeblog');
   db = mongoose.connect(app.set('db-uri'));
-
   app.use(express.cookieParser('shhhh, very secret'));
   app.use(express.session());
 });
@@ -92,7 +87,13 @@ app.get('/admin/users/create', function(req, res){
 app.post('/admin/users', function(req, res){
   userController.save(req, res);
 });
-app.get('/admin/users/:id.:format?/delete', function(req, res) {
+app.put('/admin/users/:id', function(req, res){
+  userController.update(req, res);
+});
+app.get('/admin/users/:id/edit', function(req, res) {
+  userController.edit(req, res);
+});
+app.get('/admin/users/:id/delete', function(req, res) {
   userController.remove(req, res);
 });
 /*

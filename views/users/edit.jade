@@ -3,11 +3,13 @@ extends ../adminLayout
 block content
     div.page-header
         h1: Новый пользователь
-    form.form-horizontal.panel(method='post', action='/admin/users')
+    form.form-horizontal.panel(method='post', action='/admin/users/' + u.id)
+        input(name='u[id]', value=u.id, type='hidden')
+        input(name='_method', value='PUT', type='hidden')
         div.row
             label.col.col-lg-2.control-label Username:
             div.col.col-lg-10
-                input(type="text", name='name')
+                input(type="text", name='name', value= u.name || '')
         div.row
             label.col.col-lg-2.control-label Password:
             div.col.col-lg-10
